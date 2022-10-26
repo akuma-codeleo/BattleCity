@@ -5,10 +5,13 @@ project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
-	src/Renderer/ShaderProgram.cpp
 	src/Renderer/ShaderProgram.h
-	src/Resources/ResourceManager.cpp
+	src/Renderer/ShaderProgram.cpp
+	src/Renderer/Texture2D.h
+	src/Renderer/Texture2D.cpp
 	src/Resources/ResourceManager.h
+	src/Resources/ResourceManager.cpp
+	src/Resources/stb_image.h
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
