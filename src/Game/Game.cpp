@@ -27,7 +27,7 @@ Game::~Game()
 
 void Game::render()
 {
-    //ResourceManager::getAnimatedSprite("NewAnimatedSprite")->render();
+    ResourceManager::getAnimatedSprite("NewAnimatedSprite")->render();
 
     if (m_pTank)
     {
@@ -37,7 +37,7 @@ void Game::render()
 
 void Game::update(const uint64_t delta)
 {
-    //ResourceManager::getAnimatedSprite("NewAnimatedSprite")->update(delta);
+    ResourceManager::getAnimatedSprite("NewAnimatedSprite")->update(delta);
 
     if (m_pTank)
     {
