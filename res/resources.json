@@ -1,21 +1,19 @@
 {
 	"shaders" : [
 		{
-			"name" 		 : "spriteShader",
+			"name" 		   : "spriteShader",
 			"filePath_v" : "res/shaders/vSprite.txt",
 			"filePath_f" : "res/shaders/fSprite.txt"
 		}
 	],
 	
-	"textureAtlases" : [
+	"textureAtlases"  : [
 		{
-			"name" 				: "mapTextureAtlas",
-			"filePath"  		: "res/textures/map_16x16.png",
-			"width" 			: 128,
-			"height" 			: 128,
+			"name" 						  : "mapTextureAtlas",
+			"filePath"  				: "res/textures/map_16x16.png",
 			"subTextureWidth"   : 16,
 			"subTextureHeight"  : 16,
-			"subTexture" : [
+			"subTextures" : [
 				"block",
 				"topBlock",
 				"bottomBlock",
@@ -54,10 +52,8 @@
 		},
 		
 		{
-			"name" 				: "tanksTextureAtlas",
-			"filePath" 			: "res/textures/tanks.png",
-			"width" 			: 256,
-			"height" 			: 256,
+			"name" 							: "tanksTextureAtlas",
+			"filePath" 				  : "res/textures/tanks.png",
 			"subTextureWidth" 	: 16,
 			"subTextureHeight" 	: 16,
 			"subTextures" : [
@@ -75,11 +71,11 @@
 	
 	"animatedSprites" : [
 		{
-			"name" 				: "tankAnimatedSprite",
-			"textureAtlas" 		: "tanksTextureAtlas",
-			"shader" 			: "spriteShader",
-			"initialWidth" 		: 100,
-			"initialHeight" 	: 100,
+			"name" 						  : "tankAnimatedSprite",
+			"textureAtlas" 		  : "tanksTextureAtlas",
+			"shader" 					  : "spriteShader",
+			"initialWidth" 		  : 100,
+			"initialHeight" 	  : 100,
 			"initialSubTexture" : "yellowType1_Top1",
 			"states" : [
 				{

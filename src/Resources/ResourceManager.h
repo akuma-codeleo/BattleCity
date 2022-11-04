@@ -55,6 +55,8 @@ public:
 															     const unsigned int subTextureWidth,
 															     const unsigned int subTextureHeight);
 
+	static bool loadJSONResources(const std::string& JSONPath);
+
 private:
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::ShaderProgram>> ShaderProgramsMap;
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::Texture2D>> TexturesMap;
