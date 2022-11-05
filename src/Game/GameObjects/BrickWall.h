@@ -6,11 +6,10 @@
 #include <memory>
 
 namespace RenderEngine {
-	class Sprite;
+    class Sprite;
 }
 
-class BrickWall : public IGameObject
-{
+class BrickWall : public IGameObject {
 public:
 
     enum class EBrickWallType {
@@ -52,14 +51,13 @@ public:
     };
 
     BrickWall(const EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size, const float rotation);
-	virtual void render() const override;
-	virtual void update(const uint64_t delta) override;
-
+    virtual void render() const override;
+    virtual void update(const uint64_t delta) override;
 
 private:
-    std::array<EBrickState, 4> m_eCurrentBrickState;
-	std::array<std::shared_ptr<RenderEngine::Sprite>, 15> m_sprites;
-
     void renderBrick(const EBrickLocation eBrickLocation) const;
 
+    std::array<EBrickState, 4> m_eCurrentBrickState;
+    std::array<std::shared_ptr<RenderEngine::Sprite>, 15> m_sprites;
+    std::array<glm::vec2, 4> m_blockOffsets;
 };

@@ -17,6 +17,6 @@ private:
 	size_t m_width;
 	size_t m_height;
 
-	std::vector<std::shared_ptr<IGameObject>> m_mapObjects;
+	std::vector<std::shared_ptr<IGameObject>> m_levelObjects;
 
 };
