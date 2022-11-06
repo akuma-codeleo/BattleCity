@@ -7,11 +7,12 @@ Water::Water(const glm::vec2& position, const glm::vec2& size, const float rotat
     : IGameObject(position, size, rotation, layer)
     , m_sprite(ResourceManager::getSprite("water"))
     , m_spriteAnimator(m_sprite)
-    , m_blockOffsets{ glm::vec2(0, m_size.y / 2.f),
+    , m_blockOffsets { glm::vec2(0, m_size.y / 2.f),
                        glm::vec2(m_size.x / 2.f, m_size.y / 2.f),
                        glm::vec2(0, 0),
                        glm::vec2(m_size.x / 2.f, 0) }
-{}
+{
+}
 
 void Water::renderBlock(const EBlockLocation eBlockLocation) const
 {
@@ -26,7 +27,7 @@ void Water::render() const
     renderBlock(EBlockLocation::BottomRight);
 }
 
-void Water::update(const uint64_t delta)
+void Water::update(const double delta)
 {
     m_spriteAnimator.update(delta);
 }

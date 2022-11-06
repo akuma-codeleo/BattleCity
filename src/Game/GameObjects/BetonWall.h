@@ -12,7 +12,7 @@ namespace RenderEngine {
 class BetonWall : public IGameObject {
 public:
 
-    enum class EBetonWallType : uint8_t {
+    enum class EBetonWallType {
         All,
         Top,
         Bottom,
@@ -24,12 +24,12 @@ public:
         BottomRight
     };
 
-    enum class EBlockState : uint8_t {
+    enum class EBlockState {
         Enabled = 0,
         Destroyed
     };
 
-    enum class EBlockLocation : uint8_t {
+    enum class EBlockLocation {
         TopLeft,
         TopRight,
         BottomLeft,
@@ -38,7 +38,7 @@ public:
 
     BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer);
     virtual void render() const override;
-    virtual void update(const uint64_t delta) override;
+    virtual void update(const double delta) override;
 
 private:
     void renderBlock(const EBlockLocation eBlockLocation) const;
@@ -46,5 +46,4 @@ private:
     std::array<EBlockState, 4> m_eCurrentBlockState;
     std::shared_ptr<RenderEngine::Sprite> m_sprite;
     std::array<glm::vec2, 4> m_blockOffsets;
-
 };

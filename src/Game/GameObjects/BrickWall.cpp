@@ -14,9 +14,6 @@ BrickWall::BrickWall(const EBrickWallType eBrickWallType, const glm::vec2& posit
                        glm::vec2(0, 0),
                        glm::vec2(m_size.x / 2.f, 0) }
 {
-    /*
-    скорее всего нужно сделать также как и в бетонном блоке, только один спрайт
-    */
     m_sprites[static_cast<size_t>(EBrickState::All)]                 = ResourceManager::getSprite("brickWall_All");
     m_sprites[static_cast<size_t>(EBrickState::TopLeft)]             = ResourceManager::getSprite("brickWall_TopLeft");
     m_sprites[static_cast<size_t>(EBrickState::TopRight)]            = ResourceManager::getSprite("brickWall_TopRight");
@@ -86,5 +83,6 @@ void BrickWall::render() const
     renderBrick(EBrickLocation::BottomRight);
 }
 
-void BrickWall::update(const uint64_t delta)
-{}
+void BrickWall::update(const double delta)
+{
+}

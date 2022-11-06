@@ -10,7 +10,7 @@ BetonWall::BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& posit
                             EBlockState::Destroyed,
                             EBlockState::Destroyed }
     , m_sprite(ResourceManager::getSprite("betonWall"))
-    , m_blockOffsets{ glm::vec2(0, m_size.y / 2.f),
+    , m_blockOffsets { glm::vec2(0, m_size.y / 2.f),
                        glm::vec2(m_size.x / 2.f, m_size.y / 2.f),
                        glm::vec2(0, 0),
                        glm::vec2(m_size.x / 2.f, 0) }
@@ -21,19 +21,19 @@ BetonWall::BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& posit
         m_eCurrentBlockState.fill(EBlockState::Enabled);
         break;
     case EBetonWallType::Top:
-        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)] = EBlockState::Enabled;
+        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)]  = EBlockState::Enabled;
         m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopRight)] = EBlockState::Enabled;
         break;
     case EBetonWallType::Bottom:
-        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomLeft)] = EBlockState::Enabled;
+        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomLeft)]  = EBlockState::Enabled;
         m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomRight)] = EBlockState::Enabled;
         break;
     case EBetonWallType::Left:
-        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)] = EBlockState::Enabled;
+        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)]    = EBlockState::Enabled;
         m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomLeft)] = EBlockState::Enabled;
         break;
     case EBetonWallType::Right:
-        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopRight)] = EBlockState::Enabled;
+        m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopRight)]    = EBlockState::Enabled;
         m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomRight)] = EBlockState::Enabled;
         break;
     case EBetonWallType::TopLeft:
@@ -68,6 +68,6 @@ void BetonWall::render() const
     renderBlock(EBlockLocation::BottomRight);
 }
 
-void BetonWall::update(const uint64_t delta)
+void BetonWall::update(const double delta)
 {
 }

@@ -18,20 +18,20 @@ void glfwWindowSizeCallback(GLFWwindow* pWindow, int width, int height)
     g_windowSize.x = width;
     g_windowSize.y = height;
 
-    const float map_aspect_retion = static_cast<float>(g_game->getCurrentLevelWidth()) / g_game->getCurrentLevelHeight();
-    unsigned int viewPortWidth = g_windowSize.x;
+    const float level_aspect_ratio = static_cast<float>(g_game->getCurrentLevelWidth()) / g_game->getCurrentLevelHeight();
+    unsigned int viewPortWidth  = g_windowSize.x;
     unsigned int viewPortHeight = g_windowSize.y;
     unsigned int viewPortLeftOffset = 0;
     unsigned int viewPortBottomOffset = 0;
 
-    if (static_cast<float>(g_windowSize.x) / g_windowSize.y > map_aspect_retion)
+    if (static_cast<float>(g_windowSize.x) / g_windowSize.y > level_aspect_ratio)
     {
-        viewPortWidth = static_cast<unsigned int>(g_windowSize.y * map_aspect_retion);
+        viewPortWidth = static_cast<unsigned int>(g_windowSize.y * level_aspect_ratio);
         viewPortLeftOffset = (g_windowSize.x - viewPortWidth) / 2;
     }
     else
     {
-        viewPortHeight = static_cast<unsigned int>(g_windowSize.x / map_aspect_retion);
+        viewPortHeight = static_cast<unsigned int>(g_windowSize.x / level_aspect_ratio);
         viewPortBottomOffset = (g_windowSize.y - viewPortHeight) / 2;
     }
 
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
         std::cout << "glfwInit failed!" << std::endl;
         return -1;
     }
-    
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -75,14 +75,13 @@ int main(int argc, char** argv)
     /* Make the window's context current */
     glfwMakeContextCurrent(pWindow);
 
-	if(!gladLoadGL())
-	{
+    if (!gladLoadGL())
+    {
         std::cout << "Can't load GLAD!" << std::endl;
-		return -1;
-	}
+    }
 
-    std::cout << "Renderer: " << RenderEngine::Renderer::getRendererStr() << std::endl
-        << "OpenGL version: " << RenderEngine::Renderer::getVersionStr() << std::endl;
+    std::cout << "Renderer: " << RenderEngine::Renderer::getRendererStr() << std::endl;
+    std::cout << "OpenGL version: " << RenderEngine::Renderer::getVersionStr() << std::endl;
 
     RenderEngine::Renderer::setClearColor(0, 0, 0, 1);
     RenderEngine::Renderer::setDepthTest(true);
@@ -90,8 +89,7 @@ int main(int argc, char** argv)
     {
         ResourceManager::setExecutablePath(argv[0]);
         g_game->init();
-        glfwSetWindowSize(pWindow, static_cast<int>(g_game->getCurrentLevelWidth()), static_cast<int>(g_game->getCurrentLevelHeight()));
-
+        glfwSetWindowSize(pWindow, static_cast<int>(3 * g_game->getCurrentLevelWidth()), static_cast<int>(3 * g_game->getCurrentLevelHeight()));
         auto lastTime = std::chrono::high_resolution_clock::now();
 
         /* Loop until the user closes the window */
@@ -101,7 +99,7 @@ int main(int argc, char** argv)
             glfwPollEvents();
 
             auto currentTime = std::chrono::high_resolution_clock::now();
-            uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime - lastTime).count();
+            double duration = std::chrono::duration<double, std::milli>(currentTime - lastTime).count();
             lastTime = currentTime;
             g_game->update(duration);
 

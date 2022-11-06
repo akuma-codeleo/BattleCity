@@ -32,7 +32,6 @@ std::shared_ptr<IGameObject> createGameObjectFromDescription(const char descript
         return std::make_shared<BrickWall>(BrickWall::EBrickWallType::TopLeft, position, size, rotation, 0.f);
     case 'J':
         return std::make_shared<BrickWall>(BrickWall::EBrickWallType::TopRight, position, size, rotation, 0.f);
-    
     case '5':
         return std::make_shared<BetonWall>(BetonWall::EBetonWallType::Right, position, size, rotation, 0.f);
     case '6':
@@ -43,19 +42,14 @@ std::shared_ptr<IGameObject> createGameObjectFromDescription(const char descript
         return std::make_shared<BetonWall>(BetonWall::EBetonWallType::Top, position, size, rotation, 0.f);
     case '9':
         return std::make_shared<BetonWall>(BetonWall::EBetonWallType::All, position, size, rotation, 0.f);
-    
     case 'A':
         return std::make_shared<Water>(position, size, rotation, 0.f);
-
     case 'B':
         return std::make_shared<Trees>(position, size, rotation, 1.f);
-
     case 'C':
         return std::make_shared<Ice>(position, size, rotation, -1.f);
-
     case 'E':
         return std::make_shared<Eagle>(position, size, rotation, 0.f);
-
     case 'D':
         return nullptr;
     default:
@@ -72,15 +66,14 @@ Level::Level(const std::vector<std::string>& levelDescription)
         std::cerr << "Empty level description!" << std::endl;
     }
 
-    m_width = levelDescription[0].length();
+    m_width  = levelDescription[0].length();
     m_height = levelDescription.size();
 
     m_playerRespawn_1 = { BLOCK_SIZE * (m_width / 2 - 1), BLOCK_SIZE / 2 };
     m_playerRespawn_2 = { BLOCK_SIZE * (m_width / 2 + 3), BLOCK_SIZE / 2 };
-
-    m_enemyRespawn_1 = { BLOCK_SIZE , BLOCK_SIZE * m_height - BLOCK_SIZE / 2 };
-    m_enemyRespawn_2 = { BLOCK_SIZE * (m_width / 2 + 1) , BLOCK_SIZE * m_height - BLOCK_SIZE / 2 };
-    m_enemyRespawn_3 = { BLOCK_SIZE * m_width , BLOCK_SIZE * m_height - BLOCK_SIZE / 2 };
+    m_enemyRespawn_1  = { BLOCK_SIZE,                     BLOCK_SIZE * m_height - BLOCK_SIZE / 2 };
+    m_enemyRespawn_2  = { BLOCK_SIZE * (m_width / 2 + 1), BLOCK_SIZE * m_height - BLOCK_SIZE / 2 };
+    m_enemyRespawn_3  = { BLOCK_SIZE * m_width,           BLOCK_SIZE * m_height - BLOCK_SIZE / 2 };
 
     m_levelObjects.reserve(m_width * m_height + 4);
     unsigned int currentBottomOffset = static_cast<unsigned int>(BLOCK_SIZE * (m_height - 1) + BLOCK_SIZE / 2.f);
@@ -116,15 +109,17 @@ Level::Level(const std::vector<std::string>& levelDescription)
         currentBottomOffset -= BLOCK_SIZE;
     }
 
-    //bottom border
-    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2(BLOCK_SIZE, 0), glm::vec2(m_width * BLOCK_SIZE, BLOCK_SIZE / 2.f), 0.f, 0.f));
-    //top border
-    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2(BLOCK_SIZE, m_height * BLOCK_SIZE + BLOCK_SIZE / 2.f), glm::vec2(m_width * BLOCK_SIZE, BLOCK_SIZE / 2.f), 0.f, 0.f));
-    //left border
-    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2(0.f, 0.f), glm::vec2(BLOCK_SIZE, (m_height + 1) * BLOCK_SIZE), 0.f, 0.f));
-    //right border
-    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2((m_width + 1) * BLOCK_SIZE, 0.f), glm::vec2(BLOCK_SIZE * 2.f, (m_height + 1) * BLOCK_SIZE), 0.f, 0.f));
+    // bottom border
+    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2(BLOCK_SIZE, 0.f), glm::vec2(m_width * BLOCK_SIZE, BLOCK_SIZE / 2.f), 0.f, 0.f));
 
+    // top border
+    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2(BLOCK_SIZE, m_height * BLOCK_SIZE + BLOCK_SIZE / 2.f), glm::vec2(m_width * BLOCK_SIZE, BLOCK_SIZE / 2.f), 0.f, 0.f));
+
+    // left border
+    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2(0.f, 0.f), glm::vec2(BLOCK_SIZE, (m_height + 1) * BLOCK_SIZE), 0.f, 0.f));
+
+    // right border
+    m_levelObjects.emplace_back(std::make_shared<Border>(glm::vec2((m_width + 1) * BLOCK_SIZE, 0.f), glm::vec2(BLOCK_SIZE * 2.f, (m_height + 1) * BLOCK_SIZE), 0.f, 0.f));
 }
 
 void Level::render() const
@@ -138,7 +133,7 @@ void Level::render() const
     }
 }
 
-void Level::update(const uint64_t delta)
+void Level::update(const double delta)
 {
     for (const auto& currentLevelObject : m_levelObjects)
     {

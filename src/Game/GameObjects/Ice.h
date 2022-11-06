@@ -27,5 +27,4 @@ private:
 
     std::shared_ptr<RenderEngine::Sprite> m_sprite;
     std::array<glm::vec2, 4> m_blockOffsets;
-
 };

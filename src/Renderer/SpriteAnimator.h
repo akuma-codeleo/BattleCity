@@ -2,23 +2,21 @@
 
 #include <memory>
 
-namespace RenderEngine
-{
-	class Sprite;
+namespace RenderEngine {
 
-	class SpriteAnimator
-	{
-	public:
-		SpriteAnimator(std::shared_ptr<Sprite> pSprite);
+    class Sprite;
 
-		size_t getCurrentFrame() const { return m_currentFrame; }
-		void update(uint64_t delta);
+    class SpriteAnimator {
+    public:
+        SpriteAnimator(std::shared_ptr<Sprite> pSprite);
+        size_t getCurrentFrame() const { return m_currentFrame; }
+        void update(const double delta);
 
-	private:
-		std::shared_ptr<Sprite> m_pSprite;
-		size_t m_currentFrame;
-		uint64_t m_currentFrameDuration;
-		uint64_t m_currentAnimationTime;
+    private:
+        std::shared_ptr<Sprite> m_pSprite;
+        size_t m_currentFrame;
+        double m_currentFrameDuration;
+        double m_currentAnimationTime;
+    };
 
-	};
 }
