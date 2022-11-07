@@ -18,5 +18,5 @@ void Eagle::render() const
 
 void Eagle::update(const double delta)
 {
-
+    m_colliders.emplace_back(glm::vec2(0), m_size);
 }
