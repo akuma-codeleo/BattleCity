@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include <memory>
 #include <vector>
+#include <functional>
 
 #include <glm/vec2.hpp>
 
@@ -11,6 +12,13 @@ class Level;
 
 namespace Physics
 {
+    enum class ECollisionDirection : uint8_t {
+        Top,
+        Bottom,
+        Left,
+        Right
+    };
+
     struct AABB
     {
         glm::vec2 bottomLeft;
@@ -21,6 +29,24 @@ namespace Physics
             , topRight(_topRight)
         {}
 
+    };
+
+    struct Collider {
+        Collider(const glm::vec2& _bottomLeft, const glm::vec2 _topRight, std::function<void(const IGameObject&, const ECollisionDirection)> _onCollisionCallback = {})
+            : boundingBox(_bottomLeft, _topRight)
+            , isActive(true)
+            , onCollisionCallback(_onCollisionCallback)
+        {}
+
+        Collider(const AABB& _boundingBox, std::function<void(const IGameObject&, const ECollisionDirection)> _onCollisionCallback = {})
+            : boundingBox(_boundingBox)
+            , isActive(true)
+            , onCollisionCallback(_onCollisionCallback)
+        {}
+
+        AABB boundingBox;
+        bool isActive;
+        std::function<void(const IGameObject&, const ECollisionDirection)> onCollisionCallback;
     };
 
     class PhysicsEngine
@@ -45,8 +71,8 @@ namespace Physics
         static std::unordered_set<std::shared_ptr<IGameObject>> m_dynamicObjects;
         static std::shared_ptr<Level> m_pCurrentLevel;
 
-        static bool hasIntersection(const std::vector<AABB>& colliders1, const glm::vec2& position1,
-                                    const std::vector<AABB>& colliders2, const glm::vec2& position2);
+        static bool hasIntersection(const Collider& collider1, const glm::vec2& position1,
+                                    const Collider& collider2, const glm::vec2& position2);
 
     };
 }
