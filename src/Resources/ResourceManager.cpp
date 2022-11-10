@@ -19,6 +19,7 @@ ResourceManager::TexturesMap ResourceManager::m_textures;
 ResourceManager::SpritesMap ResourceManager::m_sprites;
 std::string ResourceManager::m_path;
 std::vector<std::vector<std::string>> ResourceManager::m_levels;
+std::vector<std::string> ResourceManager::m_startScreen;
 
 
 void ResourceManager::unloadAllResources()
@@ -106,11 +107,11 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::loadTexture(const std:
     }
 
     std::shared_ptr<RenderEngine::Texture2D> newTexture = m_textures.emplace(textureName, std::make_shared<RenderEngine::Texture2D>(width,
-                                                                                                                            height,
-                                                                                                                            pixels,
-                                                                                                                            channels,
-                                                                                                                            GL_NEAREST,
-                                                                                                                            GL_CLAMP_TO_EDGE)).first->second;
+        height,
+        pixels,
+        channels,
+        GL_NEAREST,
+        GL_CLAMP_TO_EDGE)).first->second;
     stbi_image_free(pixels);
     return newTexture;
 }
@@ -127,9 +128,9 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::getTexture(const std::
 }
 
 std::shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const std::string& spriteName,
-                                                                  const std::string& textureName,
-                                                                  const std::string& shaderName,
-                                                                  const std::string& subTextureName)
+    const std::string& textureName,
+    const std::string& shaderName,
+    const std::string& subTextureName)
 {
     auto pTexture = getTexture(textureName);
     if (!pTexture)
@@ -144,8 +145,8 @@ std::shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const std::str
     }
 
     std::shared_ptr<RenderEngine::Sprite> newSprite = m_sprites.emplace(spriteName, std::make_shared<RenderEngine::Sprite>(pTexture,
-                                                                                                                           subTextureName,
-                                                                                                                           pShader)).first->second;
+        subTextureName,
+        pShader)).first->second;
 
     return newSprite;
 }
@@ -162,10 +163,10 @@ std::shared_ptr<RenderEngine::Sprite> ResourceManager::getSprite(const std::stri
 }
 
 std::shared_ptr<RenderEngine::Texture2D> ResourceManager::loatTextureAtlas(std::string textureName,
-                                                                           std::string texturePath,
-                                                                           std::vector<std::string> subTextures,
-                                                                           const unsigned int subTextureWidth,
-                                                                           const unsigned int subTextureHeight)
+    std::string texturePath,
+    std::vector<std::string> subTextures,
+    const unsigned int subTextureWidth,
+    const unsigned int subTextureHeight)
 {
     auto pTexture = loadTexture(std::move(textureName), std::move(texturePath));
     if (pTexture)
@@ -176,7 +177,7 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::loatTextureAtlas(std::
         unsigned int currentTextureOffsetY = textureHeight;
         for (auto& currentSubTextureName : subTextures)
         {
-            glm::vec2 leftBottomUV(static_cast<float>(currentTextureOffsetX + 0.01f) / textureWidth,                 static_cast<float>(currentTextureOffsetY - subTextureHeight + 0.01f) / textureHeight);
+            glm::vec2 leftBottomUV(static_cast<float>(currentTextureOffsetX + 0.01f) / textureWidth, static_cast<float>(currentTextureOffsetY - subTextureHeight + 0.01f) / textureHeight);
             glm::vec2 rightTopUV(static_cast<float>(currentTextureOffsetX + subTextureWidth - 0.01f) / textureWidth, static_cast<float>(currentTextureOffsetY - 0.01f) / textureHeight);
             pTexture->addSubTexture(std::move(currentSubTextureName), leftBottomUV, rightTopUV);
 
@@ -273,6 +274,30 @@ bool ResourceManager::loadJSONResources(const std::string& JSONPath)
                     framesDescriptions.emplace_back(pSubTexture.leftBottomUV, pSubTexture.rightTopUV, duration);
                 }
                 pSprite->insertFrames(std::move(framesDescriptions));
+            }
+        }
+    }
+
+    auto startScreenIt = document.FindMember("start_screen");
+    if (startScreenIt != document.MemberEnd())
+    {
+        const auto descriptionArray = startScreenIt->value.GetArray();
+        m_startScreen.reserve(descriptionArray.Size());
+        size_t maxLength = 0;
+        for (const auto& currentRow : descriptionArray)
+        {
+            m_startScreen.emplace_back(currentRow.GetString());
+            if (maxLength < m_startScreen.back().length())
+            {
+                maxLength = m_startScreen.back().length();
+            }
+        }
+
+        for (auto& currentRow : m_startScreen)
+        {
+            while (currentRow.length() < maxLength)
+            {
+                currentRow.append("F");
             }
         }
     }
