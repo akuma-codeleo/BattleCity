@@ -370,6 +370,15 @@
 				"redType8_right1",
 				"redType8_right2"
 			]
+		},
+		{
+			"name" 				: "menu_128x64",
+			"filePath"  		: "res/textures/menu_128x64.png",
+			"subTextureWidth"   : 128,
+			"subTextureHeight"  : 64,
+			"subTextures" : [
+				"menu"
+			]
 		}
 	],
 
@@ -726,7 +735,12 @@
             "initialSubTexture" : "bonus_gun"
         },
         
-        
+        {
+            "name"              : "menu",
+            "textureAtlas"      : "menu_128x64",
+            "shader"            : "spriteShader",
+            "initialSubTexture" : "menu"
+        },
         
         {
 			"name" 				: "tankSprite_top",
