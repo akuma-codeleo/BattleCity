@@ -31,6 +31,8 @@ add_executable(${PROJECT_NAME}
 	
 	src/Game/Game.h
 	src/Game/Game.cpp
+	src/Game/AIComponent.h
+	src/Game/AIComponent.cpp
 	
 	src/Game/GameStates/IGameState.h
 	src/Game/GameStates/StartScreen.cpp
